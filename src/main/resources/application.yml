@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: recipe-service
+
+  server:
+    port: 8080
+
+  security:
+    username: admin
+    password: password
