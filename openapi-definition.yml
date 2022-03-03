@@ -1,0 +1,319 @@
+openapi: "3.0.0"
+
+info:
+  version: 0.1.0
+  title: Swagger Recipe
+  description: API Rest of microservice recipe
+  contact:
+    name: Tiago Simoes
+    email: tfdsimoes@gmail.com
+
+servers:
+- url: http://localhost:8080
+  description: Localhost
+
+tags:
+- name: Recipe
+
+paths:
+  /v1/recipe:
+    post:
+      tags:
+      - Recipe
+      summary: Create recipe
+      description: Create a new recipe
+      operationId: createRecipe
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/requestRecipe"
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/savedRecipe"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonError"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonError"
+
+    get:
+      tags:
+      - Recipe
+      summary: Get all recipes
+      description: Get all recipes with pagination
+      operationId: getAllRecipes
+      parameters:
+      - name: offset
+        in: query
+        description: Number elements to pass
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+          default: 0
+      - name: limit
+        in: query
+        description: Total elements to ger
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+          default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/savedRecipe"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonError"
+
+  /v1/recipe/{id}:
+    put:
+      tags:
+      - Recipe
+      summary: Update recipe
+      description: Update a specific recipe
+      operationId: updateRecipe
+      security:
+      - basicAuth: []
+      parameters:
+      - name: id
+        in: path
+        description: id of the recipe
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/requestRecipe"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/savedRecipe"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonError"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonError"
+
+    get:
+      tags:
+      - Recipe
+      summary: Get recipe
+      description: Get a specific recipe
+      operationId: getRecipe
+      parameters:
+      - name: id
+        in: path
+        description: id of the recipe
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/savedRecipe"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonError"
+
+    delete:
+      tags:
+      - Recipe
+      summary: Delete recipe
+      description: Delete recipe from the system
+      operationId: deleteRecipe
+      security:
+      - basicAuth: []
+      parameters:
+      - name: id
+        in: path
+        description: id of the recipe
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonError"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonError"
+
+components:
+  schemas:
+    step:
+      type: object
+      required:
+      - order
+      - instructions
+      properties:
+        order:
+          type: integer
+          format: int32
+          minimum: 1
+        instructions:
+          type: string
+
+    ingredient:
+      type: object
+      required:
+      - name
+      - quantatity
+      - units
+      properties:
+        name:
+          type: string
+          description: Name of the ingredient
+        quantatity:
+          type: integer
+          format: int32
+          description: Quantity of the ingredient
+        units:
+          type: string
+          description: Units of measure to use of the ingredient
+
+    requestRecipe:
+      type: object
+      required:
+      - name
+      - description
+      - ingredients
+      - steps
+      - tools
+      properties:
+        name:
+          type: string
+          description: Name of the recipe
+        description:
+          type: string
+          description: Description of the recipe
+        ingredients:
+          type: array
+          description: Ingredients used in the recipe
+          items:
+            $ref: '#/components/schemas/ingredient'
+        steps:
+          type: array
+          description: Steps need to do
+          items:
+            $ref: '#/components/schemas/step'
+        tools:
+          type: array
+          description: Tools need
+          items:
+            type: string
+
+    savedRecipe:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - ingredients
+      - steps
+      - tools
+      properties:
+        id:
+          type: string
+          description: Id in the system
+        name:
+          type: string
+          description: Name of the recipe
+        description:
+          type: string
+          description: Description of the recipe
+        ingredients:
+          type: array
+          description: Ingredients used in the recipe
+          items:
+            $ref: '#/components/schemas/ingredient'
+        steps:
+          type: array
+          description: Steps need to do
+          items:
+            $ref: '#/components/schemas/step'
+        tools:
+          type: array
+          description: Tools need
+          items:
+            type: string
+
+    commonError:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error identifier
+        description:
+          type: string
+          description: Title of the error
+        detail:
+          type: string
+          description: Detail of the error
+        key:
+          type: string
+          description: Internationalizacion key message
+        params:
+          type: array
+          description: Params for the Internationalizacion key message
+          items:
+            type: string
+
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
