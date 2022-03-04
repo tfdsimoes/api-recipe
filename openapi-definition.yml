@@ -1,4 +1,4 @@
-openapi: "3.0.0"
+openapi: "3.0.1"
 
 info:
   version: 0.1.0
@@ -211,13 +211,13 @@ components:
       type: object
       required:
       - name
-      - quantatity
+      - quantity
       - units
       properties:
         name:
           type: string
           description: Name of the ingredient
-        quantatity:
+        quantity:
           type: integer
           format: int32
           description: Quantity of the ingredient

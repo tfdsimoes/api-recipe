@@ -2,21 +2,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.4</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+
 	<groupId>com.getdrop</groupId>
 	<artifactId>recipe</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>recipe</name>
 	<description>API Recipe ...</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.6.4</version>
+	</parent>
+
 	<properties>
 		<java.version>11</java.version>
-		<mapstruct.version>1.4.2.final</mapstruct.version>
+		<mapstruct.version>1.4.2.Final</mapstruct.version>
+		<openapi-generator.version>5.4.0</openapi-generator.version>
+		<jackson-nullable.version>0.2.2</jackson-nullable.version>
+		<assertj.version>3.22.0</assertj.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -33,15 +39,30 @@
 
 		<dependency>
 		    <groupId>org.mapstruct</groupId>
-		    <artifactId>mapstruct-processor</artifactId>
-		    <version>1.4.2.Final</version>
+		    <artifactId>mapstruct</artifactId>
+		    <version>${mapstruct.version}</version>
 		</dependency>
-
-
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>openapi-generator</artifactId>
+			<version>${openapi-generator.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>${jackson-nullable.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>${assertj.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -63,6 +84,35 @@
 			</plugin>
 
 			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>${openapi-generator.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/openapi-definition.yml</inputSpec>
+							<generatorName>spring</generatorName>
+							<library>spring-boot</library>
+							<modelNameSuffix>DTO</modelNameSuffix>
+							<generateApiTests>false</generateApiTests>
+							<generateModelTests>false</generateModelTests>
+							<configOptions>
+								<basePackage>com.getdrop.recipe.rest.controller</basePackage>
+								<modelPackage>com.getdrop.recipe.rest.controller.model</modelPackage>
+								<apiPackage>com.getdrop.recipe.rest.controller.api</apiPackage>
+								<dateLibrary>java11</dateLibrary>
+								<interfaceOnly>true</interfaceOnly>
+								<useTags>true</useTags>
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
@@ -79,6 +129,12 @@
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 							<version>${lombok.version}</version>
+						</path>
+
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok-mapstruct-binding</artifactId>
+							<version>0.2.0</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
@@ -106,5 +162,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
