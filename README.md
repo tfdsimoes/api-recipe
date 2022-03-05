@@ -28,7 +28,7 @@ Maven will generate classes, run testes and build a docker image to be used.
 ## How to run
 To start the project just need to run:
 ```
-$ docker-compose up -d
+$ docker-compose up -d --build
 ```
 
 To stop the project
