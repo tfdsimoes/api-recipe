@@ -23,7 +23,9 @@ services:
   recipe-service:
     image: getdrop/recipe:0.0.1-SNAPSHOT
     restart: always
-    container_name: recipe-service
+    deploy:
+      mode: replicated
+      replicas: 2
     depends_on:
     - mongodb
     networks:
