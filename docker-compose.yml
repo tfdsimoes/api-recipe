@@ -7,6 +7,18 @@ networks:
     internal: true
 
 services:
+  nginx:
+    image: nginx:latest
+    volumes:
+    - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+    - recipe-service
+    networks:
+    - public-network
+    - private-network
+    ports:
+    - "8080:8080"
+
   recipe-service:
     image: getdrop/recipe:0.0.1-SNAPSHOT
     restart: always
@@ -14,7 +26,6 @@ services:
     depends_on:
     - mongodb
     networks:
-    - public-network
     - private-network
     ports:
     - "8080:8080"
@@ -26,7 +37,6 @@ services:
     ports:
      - "27017:27017"
     networks:
-    # - public-network
     - private-network
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
