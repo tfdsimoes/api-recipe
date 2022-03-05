@@ -1,4 +1,4 @@
-package com.getdrop.recipe.rest.controller.fixtures;
+package com.getdrop.recipe.usecase.recipe.fixtures;
 
 import com.getdrop.recipe.rest.controller.model.StepDTO;
 import com.getdrop.recipe.usecase.recipe.model.Step;

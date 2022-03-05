@@ -5,6 +5,15 @@ spring:
   server:
     port: 8080
 
+  data:
+    mongodb:
+      username: admin
+      password: password
+      database: recipe-db
+      port: 27017
+      host: localhost
+
+recipe:
   security:
     username: admin
-    password: password
+    password: admin

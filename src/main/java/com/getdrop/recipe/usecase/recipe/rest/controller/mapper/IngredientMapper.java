@@ -1,4 +1,4 @@
-package com.getdrop.recipe.rest.controller.mapper;
+package com.getdrop.recipe.usecase.recipe.rest.controller.mapper;
 
 import com.getdrop.recipe.common.mapper.CommonMapperConfig;
 import com.getdrop.recipe.rest.controller.model.IngredientDTO;

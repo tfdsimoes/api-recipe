@@ -1,9 +1,9 @@
-package com.getdrop.recipe.rest.controller.fixtures;
+package com.getdrop.recipe.usecase.recipe.fixtures;
 
-import static com.getdrop.recipe.rest.controller.fixtures.IngredientFixtures.INGREDIENT;
-import static com.getdrop.recipe.rest.controller.fixtures.IngredientFixtures.INGREDIENT_DTO;
-import static com.getdrop.recipe.rest.controller.fixtures.StepFixtures.STEP;
-import static com.getdrop.recipe.rest.controller.fixtures.StepFixtures.STEP_DTO;
+import static com.getdrop.recipe.usecase.recipe.fixtures.IngredientFixtures.INGREDIENT;
+import static com.getdrop.recipe.usecase.recipe.fixtures.IngredientFixtures.INGREDIENT_DTO;
+import static com.getdrop.recipe.usecase.recipe.fixtures.StepFixtures.STEP;
+import static com.getdrop.recipe.usecase.recipe.fixtures.StepFixtures.STEP_DTO;
 
 import java.util.List;
 
@@ -39,4 +39,16 @@ public class RecipeFixtures {
       .ingredients(List.of(INGREDIENT_DTO))
       .steps(List.of(STEP_DTO))
       .tools(List.of("tool"));
+
+  public static final Recipe UPDATE_RECIPE = Recipe.builder()
+      .name("updateName")
+      .description("updateDescription")
+      .ingredients(List.of(INGREDIENT, INGREDIENT, INGREDIENT))
+      .steps(List.of(STEP, STEP, STEP))
+      .tools(List.of("tool", "tool", "tool"))
+      .build();
+
+  public static final Recipe UPDATE_RECIPE_WITH_ID = UPDATE_RECIPE.toBuilder()
+      .id("id")
+      .build();
 }

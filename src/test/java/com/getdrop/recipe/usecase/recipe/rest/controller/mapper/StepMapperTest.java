@@ -1,7 +1,7 @@
-package com.getdrop.recipe.rest.controller.mapper;
+package com.getdrop.recipe.usecase.recipe.rest.controller.mapper;
 
-import static com.getdrop.recipe.rest.controller.fixtures.StepFixtures.STEP;
-import static com.getdrop.recipe.rest.controller.fixtures.StepFixtures.STEP_DTO;
+import static com.getdrop.recipe.usecase.recipe.fixtures.StepFixtures.STEP;
+import static com.getdrop.recipe.usecase.recipe.fixtures.StepFixtures.STEP_DTO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
