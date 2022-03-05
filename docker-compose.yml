@@ -7,17 +7,26 @@ networks:
     internal: true
 
 services:
+  recipe-service:
+    image: getdrop/recipe:0.0.1-SNAPSHOT
+
   mongodb:
     image: mongo:latest
     restart: always
     container_name: mongodb
+    ports:
+    - 27017:27017
     networks:
+    - public-network
     - private-network
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: password
-    #volumes:
+      MONGO_INITDB_DATABASE: recipe-db
+    volumes:
+      - ./mongo-init.js/:/docker-entrypoint-initdb.d/mongo-init.js:ro
     #  - ./database:/data/db
+
 
   mongo-express:
     image: mongo-express:latest
