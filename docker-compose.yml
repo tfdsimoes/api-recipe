@@ -9,6 +9,7 @@ networks:
 services:
   nginx:
     image: nginx:latest
+    container_name: nginx
     volumes:
     - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
@@ -44,7 +45,7 @@ services:
       MONGO_INITDB_DATABASE: recipe-db
     volumes:
       - ./mongo-init.js/:/docker-entrypoint-initdb.d/mongo-init.js:ro
-    #  - ./database:/data/db
+    #  - ./database:/data/db # for making data available out of container
 
   mongo-express:
     image: mongo-express:latest
