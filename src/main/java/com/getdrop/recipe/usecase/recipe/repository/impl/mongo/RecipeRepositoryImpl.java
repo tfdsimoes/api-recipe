@@ -1,14 +1,19 @@
 package com.getdrop.recipe.usecase.recipe.repository.impl.mongo;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
+import com.getdrop.recipe.common.repository.RepositoryTools;
 import com.getdrop.recipe.usecase.recipe.model.Recipe;
 import com.getdrop.recipe.usecase.recipe.repository.RecipeRepository;
 import com.getdrop.recipe.usecase.recipe.repository.impl.mongo.crud.RecipeCrud;
+import com.getdrop.recipe.usecase.recipe.repository.impl.mongo.document.RecipeDocument;
 import com.getdrop.recipe.usecase.recipe.repository.impl.mongo.mapper.RecipeDocumentMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 @Slf4j
@@ -28,8 +33,30 @@ public class RecipeRepositoryImpl implements RecipeRepository {
   }
 
   @Override
-  public List<Recipe> getAll(String name, List<String> ingredients, List<String> tools) {
-    return null;
+  public List<Recipe> getAll(String name, List<String> ingredients, List<String> tools, int limit, int offset) {
+    log.info("[RecipeRepositoryImpl] Find all recipes: name {}, ingredients {}, tools {}, limit {}, offset {}",
+        name, ingredients, tools, limit, offset);
+
+    var pageRequest = RepositoryTools.generatePageRequest(limit, offset);
+
+    if (StringUtils.isEmpty(name)) {
+      name = "";
+    }
+    List<RecipeDocument> recipeDocuments;
+
+    if (Objects.nonNull(tools)) {
+      if (Objects.nonNull(ingredients)) {
+        recipeDocuments = crud.findAllByNameContainingAndToolsInAndIngredientsNameIn(name, tools, ingredients, pageRequest);
+      } else {
+        recipeDocuments = crud.findAllByNameContainingAndToolsIn(name, tools, pageRequest);
+      }
+    } else if(Objects.nonNull(ingredients)) {
+      recipeDocuments = crud.findAllByNameContainingAndIngredientsNameIn(name, ingredients, pageRequest);
+    } else {
+      recipeDocuments = crud.findAllByNameContaining(name, pageRequest);
+    }
+
+    return mapper.toModels(recipeDocuments);
   }
 
   @Override

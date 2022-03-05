@@ -4,6 +4,8 @@ import static com.getdrop.recipe.usecase.recipe.fixtures.RecipeFixtures.RECIPE_W
 import static com.getdrop.recipe.usecase.recipe.repository.impl.mongo.fixtures.RecipeFixtures.RECIPE_DOCUMENT;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -28,5 +30,12 @@ class RecipeDocumentMapperTest {
   void shouldMapToModel() {
     var result = recipeDocumentMapper.toModel(RECIPE_DOCUMENT);
     assertThat(result).isEqualTo(RECIPE_WITH_ID);
+  }
+
+  @Test
+  @DisplayName("Convert list of RecipeDocument to list of Recipes")
+  void shouldMapToModels() {
+    var result = recipeDocumentMapper.toModels(List.of(RECIPE_DOCUMENT, RECIPE_DOCUMENT, RECIPE_DOCUMENT));
+    assertThat(result).isEqualTo(List.of(RECIPE_WITH_ID, RECIPE_WITH_ID, RECIPE_WITH_ID));
   }
 }

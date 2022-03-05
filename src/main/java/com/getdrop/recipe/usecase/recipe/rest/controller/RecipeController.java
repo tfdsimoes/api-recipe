@@ -37,8 +37,12 @@ public class RecipeController extends RestExceptionHandler implements RecipeApi 
   }
 
   @Override
-  public ResponseEntity<List<SavedRecipeDTO>> getAllRecipes(Integer offset, Integer limit) {
-    return RecipeApi.super.getAllRecipes(offset, limit);
+  public ResponseEntity<List<SavedRecipeDTO>> getAllRecipes(Integer offset, Integer limit, String name, List<String> tools,
+      List<String> ingredients) {
+    log.info("[RecipeController] Find all recipes: name {}, ingredients {}, tools {}, limit {}, offset {}",
+        name, ingredients, tools, limit, offset);
+    var recipes = recipeService.getAll(name, ingredients, tools, offset, limit);
+    return ResponseEntity.ok(recipeMapper.toDTOs(recipes));
   }
 
   @Override
@@ -54,4 +58,6 @@ public class RecipeController extends RestExceptionHandler implements RecipeApi 
     var recipe = recipeService.update(id, recipeMapper.toModel(requestRecipeDTO));
     return ResponseEntity.ok(recipeMapper.toDTO(recipe));
   }
+
+
 }

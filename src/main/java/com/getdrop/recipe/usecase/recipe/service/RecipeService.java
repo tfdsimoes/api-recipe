@@ -8,7 +8,7 @@ public interface RecipeService {
 
   Recipe create(Recipe newRecipe);
 
-  List<Recipe> getAll(String name, List<String> ingredients, List<String> tools);
+  List<Recipe> getAll(String name, List<String> ingredients, List<String> tools, int offset, int limit);
 
   Recipe findById(String id);
 

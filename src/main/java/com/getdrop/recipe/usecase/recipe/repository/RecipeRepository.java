@@ -9,7 +9,7 @@ public interface RecipeRepository {
 
   Recipe create(Recipe newRecipe);
 
-  List<Recipe> getAll(String name, List<String> ingredients, List<String> tools);
+  List<Recipe> getAll(String name, List<String> ingredients, List<String> tools, int limit, int offset);
 
   Optional<Recipe> findById(String id);
 

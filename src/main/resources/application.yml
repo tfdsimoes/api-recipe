@@ -7,11 +7,13 @@ spring:
 
   data:
     mongodb:
-      username: admin
-      password: password
+      uthentication-database: admin
+      username: user
+      password: user
       database: recipe-db
       port: 27017
-      host: localhost
+      host: mongodb
+
 
 recipe:
   security:

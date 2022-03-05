@@ -1,5 +1,7 @@
 package com.getdrop.recipe.usecase.recipe.common.mapper;
 
+import java.util.List;
+
 import com.getdrop.recipe.common.mapper.CommonMapperConfig;
 import com.getdrop.recipe.rest.controller.model.RequestRecipeDTO;
 import com.getdrop.recipe.rest.controller.model.SavedRecipeDTO;
@@ -25,4 +27,6 @@ public interface RecipeMapper {
 
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
   void update(@MappingTarget Recipe recipe, Recipe updateRecipe);
+
+  List<SavedRecipeDTO> toDTOs(List<Recipe> recipes);
 }

@@ -69,13 +69,35 @@ paths:
           default: 0
       - name: limit
         in: query
-        description: Total elements to ger
+        description: Total elements to get
         required: false
         schema:
           type: integer
           format: int32
           minimum: 1
           default: 10
+      - name: name
+        in: query
+        description: Name of the recipe to find
+        required: false
+        schema:
+          type: string
+      - name: tools
+        in: query
+        description: Tools used in recipe
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: ingredients
+        in: query
+        description: Ingredients used in recipe
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         '200':
           description: OK
@@ -127,6 +149,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/commonError"
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonError"
         '403':
           description: Forbidden
           content:
@@ -154,8 +182,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/savedRecipe"
-        '400':
-          description: Bad Request
+        '404':
+          description: Not found
           content:
             application/json:
               schema:
@@ -181,6 +209,12 @@ paths:
           description: OK
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commonError"
+        '404':
+          description: Not found
           content:
             application/json:
               schema:

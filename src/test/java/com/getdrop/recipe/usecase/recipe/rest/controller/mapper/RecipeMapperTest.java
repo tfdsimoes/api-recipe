@@ -8,6 +8,8 @@ import static com.getdrop.recipe.usecase.recipe.fixtures.RecipeFixtures.UPDATE_R
 import static com.getdrop.recipe.usecase.recipe.fixtures.RecipeFixtures.UPDATE_RECIPE_WITH_ID;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import com.getdrop.recipe.usecase.recipe.common.mapper.RecipeMapper;
 import com.getdrop.recipe.usecase.recipe.common.mapper.RecipeMapperImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -42,5 +44,12 @@ class RecipeMapperTest {
     var result = RECIPE_WITH_ID.toBuilder().build();
     recipeMapper.update(result, UPDATE_RECIPE);
     assertThat(result).isEqualTo(UPDATE_RECIPE_WITH_ID);
+  }
+
+  @Test
+  @DisplayName("Convert list Recipe to List SaveRecipeDTO")
+  void shouldMapToDTOs() {
+    var result = recipeMapper.toDTOs(List.of(RECIPE_WITH_ID, RECIPE_WITH_ID, RECIPE_WITH_ID));
+    assertThat(result).isEqualTo(List.of(SAVED_RECIPE_DTO, SAVED_RECIPE_DTO, SAVED_RECIPE_DTO));
   }
 }

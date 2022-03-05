@@ -27,8 +27,10 @@ public class RecipeServiceImpl implements RecipeService {
   }
 
   @Override
-  public List<Recipe> getAll(String name, List<String> ingredients, List<String> tools) {
-    return null;
+  public List<Recipe> getAll(String name, List<String> ingredients, List<String> tools, int offset, int limit) {
+    log.info("[RecipeServiceImpl] Find all recipes: name {}, ingredients {}, tools {}, limit {}, offset {}",
+        name, ingredients, tools, limit, offset);
+    return recipeRepository.getAll(name, ingredients, tools, offset, limit);
   }
 
   @Override
