@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "7df7384a-8310-4c86-9085-b3711b302660",
+		"name": "RecipeApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Recipe",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"name\",\n    \"description\":\"description\",\n    \"ingredients\":[\n        {\n            \"name\":\"ingredient1\",\n            \"quantity\":1,\n            \"units\":\"gr\"\n        }\n    ],\n    \"steps\":[\n        {\n            \"order\":1,\n            \"instructions\":\"instructions\"\n        }\n    ],\n    \"tools\":[\"tool1\", \"tool2\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/recipe",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recipe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Recipe",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/recipe/{id}",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recipe",
+						"{id}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Recipe",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"name update\",\n    \"description\":\"description update\",\n    \"ingredients\":[\n        {\n            \"name\":\"ingredient1\",\n            \"quantity\":1,\n            \"units\":\"gr\"\n        },\n        {\n            \"name\":\"ingredient2\",\n            \"quantity\":2,\n            \"units\":\"liters\"\n        }\n    ],\n    \"steps\":[\n        {\n            \"order\":1,\n            \"instructions\":\"instructions1\"\n        },{\n            \"order\":2,\n            \"instructions\":\"instructions2\"\n        }\n    ],\n    \"tools\":[\"tool1\", \"tool2\", \"tool3\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/recipe/6223028a934d6e10550fa3ee",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recipe",
+						"6223028a934d6e10550fa3ee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Recipe",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/recipe/6223028a934d6e10550fa3ee",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recipe",
+						"6223028a934d6e10550fa3ee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/recipe",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recipe"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Pasta",
+							"disabled": true
+						},
+						{
+							"key": "tools",
+							"value": "pan",
+							"disabled": true
+						},
+						{
+							"key": "ingredients",
+							"value": "Apple",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: recipe-service
+
+  server:
+    port: 8080
+
+  data:
+    mongodb:
+      uthentication-database: admin
+      username: user
+      password: user
+      database: recipe-db
+      port: 27017
+      host: mongodb
+
+recipe:
+  security:
+    username: admin
+    password: admin
